@@ -37,6 +37,7 @@ import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.simple.SimpleJdbcTemplate;
 import org.springframework.util.Assert;
 import org.springframework.util.ClassUtils;
+import org.springframework.util.StringUtils;
 
 /**
  * <p>
@@ -309,7 +310,11 @@ public class JdbcPagingItemReader<T> extends AbstractPagingItemReader<T> impleme
 
 	private class PagingRowMapper implements RowMapper {
 		public Object mapRow(ResultSet rs, int rowNum) throws SQLException {
-			startAfterValue = rs.getObject(queryProvider.getSortKey());
+			if (StringUtils.hasText(queryProvider.getSortKeyAlias())) {
+				startAfterValue = rs.getObject(queryProvider.getSortKeyAlias());
+			} else {
+				startAfterValue = rs.getObject(queryProvider.getSortKey());
+			}
 			return rowMapper.mapRow(rs, rowNum);
 		}
 	}

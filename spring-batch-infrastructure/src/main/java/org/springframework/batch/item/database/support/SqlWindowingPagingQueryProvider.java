@@ -85,7 +85,11 @@ public class SqlWindowingPagingQueryProvider extends AbstractSqlPagingQueryProvi
 	}
 
 	protected String getAfterWhereClause() {
-		return "";
+		if (getGroupClause() != null) {
+			return " GROUP BY " + getGroupClause();
+		} else {
+			return "";
+		}
 	}
 
 	@Override

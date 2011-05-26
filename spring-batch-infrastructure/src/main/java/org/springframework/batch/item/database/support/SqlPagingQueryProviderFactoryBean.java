@@ -57,7 +57,11 @@ public class SqlPagingQueryProviderFactoryBean implements FactoryBean {
 
 	private String selectClause;
 
+	private String groupClause;
+
 	private String sortKey;
+	
+	private String sortKeyAlias;
 
 	private boolean ascending = true;
 
@@ -151,6 +155,12 @@ public class SqlPagingQueryProviderFactoryBean implements FactoryBean {
 		provider.setWhereClause(whereClause);
 		provider.setSortKey(sortKey);
 		provider.setAscending(ascending);
+		if (StringUtils.hasText(groupClause)) {
+			provider.setGroupClause(groupClause);
+		}
+		if (StringUtils.hasText(sortKeyAlias)) {
+			provider.setSortKeyAlias(sortKeyAlias);
+		}
 		if (StringUtils.hasText(selectClause)) {
 			provider.setSelectClause(selectClause);
 		}
@@ -176,6 +186,22 @@ public class SqlPagingQueryProviderFactoryBean implements FactoryBean {
 	 */
 	public boolean isSingleton() {
 		return true;
+	}
+
+	public void setGroupClause(String groupClause) {
+		this.groupClause = groupClause;
+	}
+
+	public String getGroupClause() {
+		return groupClause;
+	}
+
+	public void setSortKeyAlias(String sortKeyAlias) {
+		this.sortKeyAlias = sortKeyAlias;
+	}
+
+	public String getSortKeyAlias() {
+		return sortKeyAlias;
 	}
 
 }
